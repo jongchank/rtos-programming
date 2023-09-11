@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <assert.h>
 
 int show(const char *msg, int n);
 
@@ -16,6 +18,9 @@ int main(void)
 int show(const char *msg, int n)
 {
     int i;
+
+    assert(strlen(msg) != 0);
+    assert(n != 0);
 
     if (msg == NULL) {
         return -1;
