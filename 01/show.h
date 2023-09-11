@@ -12,8 +12,7 @@ enum {
 #define MAX_LEN_MSG 30
 #define MAX_N 10
 
-extern int eno;
-
 int show(const char *msg, int n);
+int get_eno(void);
 
 #endif  /* __SHOW_H__ */

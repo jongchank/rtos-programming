@@ -3,7 +3,9 @@
 #include <assert.h>
 #include "show.h"
 
-int eno;
+static int eno;
+
+static int validate_inputs(const char *msg, int n);
 
 int show(const char *msg, int n)
 {
@@ -13,6 +15,23 @@ int show(const char *msg, int n)
     assert(n != 0);
 
     eno = E_OK;
+    if (validate_inputs(msg, n) < 0) {
+        return -1;
+    }
+
+    for (i = 0; i < n; i++) {
+        printf("%s", msg);
+    }
+    return 0;
+}
+
+int get_eno(void)
+{
+    return eno;
+}
+
+static int validate_inputs(const char *msg, int n)
+{
     if (msg == NULL) {
         eno = E_NULL_MSG;
         return -1;
@@ -28,10 +47,6 @@ int show(const char *msg, int n)
     if (n > MAX_N) {
         eno = E_MAX_N;
         return -1;
-    }
-
-    for (i = 0; i < n; i++) {
-        printf("%s", msg);
     }
     return 0;
 }

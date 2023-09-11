@@ -17,7 +17,7 @@ int main(void)
     }
     ret = show(s, n);
     if (ret < 0) {
-        fprintf(stderr, "show() failed. ret = %d\n", eno);
+        fprintf(stderr, "show() failed. ret = %d\n", get_eno());
     }
     return 0;
 }
