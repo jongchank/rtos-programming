@@ -2,13 +2,24 @@
 #include <string.h>
 #include <assert.h>
 
+#define MAX_LEN_MSG 30
+#define MAX_N 10
+
 int show(const char *msg, int n);
 
 int main(void)
 {
     int ret;
+    char *s = "Hello\n";
+    int n = 5;
 
-    ret = show("Hello\n", 5);
+    if (strlen(s) > MAX_LEN_MSG) {
+        fprintf(stderr, "String too long (%lu)\n", strlen(s));
+    }
+    if (n > MAX_N) {
+        fprintf(stderr, "Above limit (%d)\n", n);
+    }
+    ret = show(s, 5);
     if (ret < 0) {
         fprintf(stderr, "show() failed. ret = %d\n", ret);
     }
@@ -27,6 +38,12 @@ int show(const char *msg, int n)
     }
     if (n < 0) {
         return -2;
+    }
+    if (strlen(msg) > MAX_LEN_MSG) {
+        return -3;
+    }
+    if (n > MAX_N) {
+        return -4;
     }
 
     for (i = 0; i < n; i++) {
