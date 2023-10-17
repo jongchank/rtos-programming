@@ -14,15 +14,22 @@ __attribute__((packed))
 #endif
 ;
 
+#define REAL(a, b) (((uint8_t*)&(b)) - ((uint8_t*)&(a)))
+#define REALL(a, t) (((uint8_t*)&(t)) + sizeof(t) - ((uint8_t*)&(a)))
+
+#define PADDING(a, b) (((uint8_t*)&(b)) - ((uint8_t*)&(a)) - sizeof(a))
+#define PADDINGL(a, t) (((uint8_t*)&(t)) + sizeof(t) - ((uint8_t*)&(a)) - sizeof(a))
+
 int main(void)
 {
     struct test t;
-    printf("%zu\n", sizeof(struct test));
-    printf("%zu %zu\n", ((uint8_t*)&(t.b)) - ((uint8_t*)&(t.a)), sizeof(t.a));
-    printf("%zu %zu\n", ((uint8_t*)&(t.c)) - ((uint8_t*)&(t.b)), sizeof(t.b));
-    printf("%zu %zu\n", ((uint8_t*)&(t.d)) - ((uint8_t*)&(t.c)), sizeof(t.c));
-    printf("%zu %zu\n", ((uint8_t*)&(t.e)) - ((uint8_t*)&(t.d)), sizeof(t.d));
-    printf("%zu %zu\n", ((uint8_t*)&(t.f)) - ((uint8_t*)&(t.e)), sizeof(t.e));
-    printf("%zu %zu\n", ((uint8_t*)&(t.a)) + sizeof(struct test) - ((uint8_t*)&(t.f)), sizeof(t.f));
+    printf("Structure size = %zu\n", sizeof(struct test));
+    printf("SIZ PAD RAL\n");
+    printf("%2zu + %zu = %zu\n", sizeof(t.a), PADDING(t.a, t.b), REAL(t.a, t.b));
+    printf("%2zu + %zu = %zu\n", sizeof(t.b), PADDING(t.b, t.c), REAL(t.b, t.c));
+    printf("%2zu + %zu = %zu\n", sizeof(t.c), PADDING(t.c, t.d), REAL(t.c, t.d));
+    printf("%2zu + %zu = %zu\n", sizeof(t.d), PADDING(t.d, t.e), REAL(t.d, t.e));
+    printf("%2zu + %zu = %zu\n", sizeof(t.e), PADDING(t.e, t.f), REAL(t.e, t.f));
+    printf("%2zu + %zu = %zu\n", sizeof(t.f), PADDINGL(t.f, t), REALL(t.f, t));
     return 0;
 }
